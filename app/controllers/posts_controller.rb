@@ -1,6 +1,8 @@
 class PostsController < ApplicationController
+  before_action :find_post, only: [:show]
+  
   def show
-    @post = Post.find(params[:id])
+    
   end
 
   def index
@@ -18,7 +20,11 @@ class PostsController < ApplicationController
 
   private
 
+  def find_post
+    @post = Post.find(params[:id])
+  end
+
   def post_params
-    params.require(:post).permit(:title, :content, category_ids:[], categories_attributes: [:name])
+    params.require(:post).permit(:title, :content, category_ids:[], categories_attributes: [:name], comment_attributes: [:content])
   end
 end
